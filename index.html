@@ -51,4 +51,117 @@ box-shadow:0 0 50px #ff416c;
 font-size:26px;
 margin-top:30px;
 width:60%;
-text-align:cente
+text-align:center;
+opacity:0;
+}
+
+canvas{
+position:absolute;
+top:0;
+left:0;
+}
+
+@keyframes fadeIn{
+0%{opacity:0;transform:translateY(50px);}
+100%{opacity:1;transform:translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="glow">Hey Ishita...</div>
+<button onclick="startLove()">Click me ❤️</button>
+<div id="loveText"></div>
+
+<canvas id="c"></canvas>
+
+<audio id="song" loop>
+<source src="https://dl.dropboxusercontent.com/s/0h0a7m9u1cbq6m6/perfect.mp3">
+</audio>
+
+<script>
+
+function startLove(){
+
+document.getElementById("song").play();
+
+document.querySelector(".glow").innerHTML="Happy Valentine's Day ❤️";
+
+let text="I love you so damn much Ishita. Every timeline of my life is better because you exist in it. Thank you for loving me even when I forget where I kept my phone while holding it. You are my favourite notification in this chaotic universe. ❤️ – Bhavesh";
+
+let i=0;
+
+let speed=40;
+
+document.getElementById("loveText").style.opacity=1;
+
+function type(){
+if(i<text.length){
+document.getElementById("loveText").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,speed);
+}
+}
+
+type();
+fireworks();
+}
+
+var c=document.getElementById("c");
+var ctx=c.getContext("2d");
+
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+
+var particles=[];
+
+function fireworks(){
+
+for(let i=0;i<150;i++){
+
+particles.push({
+
+x:c.width/2,
+y:c.height/2,
+vx:(Math.random()-0.5)*8,
+vy:(Math.random()-0.5)*8,
+life:100
+
+});
+}
+
+animate();
+}
+
+function animate(){
+
+ctx.fillStyle="rgba(0,0,0,0.2)";
+ctx.fillRect(0,0,c.width,c.height);
+
+particles.forEach((p,index)=>{
+
+p.x+=p.vx;
+p.y+=p.vy;
+p.life--;
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,2,0,Math.PI*2);
+ctx.fillStyle="pink";
+ctx.fill();
+
+if(p.life<=0){
+particles.splice(index,1);
+}
+
+});
+
+requestAnimationFrame(animate);
+
+}
+
+</script>
+
+</body>
+</html>
